@@ -1,0 +1,15 @@
+package com.yahoo.media.ncg.jarvis.graphql.utils;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+import java.util.UUID;
+
+public class ContentUtilTest {
+
+    @Test
+    public void testIsValidUuid() {
+        assertTrue(ContentUtils.isValidUuid(UUID.randomUUID().toString()));
+    }
+}
