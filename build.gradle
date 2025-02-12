@@ -28,7 +28,7 @@ ext {
     ncgCommonVersion = '0.1.2'
     httpClientVersion = '5.4.1'
     httpCoreVersion = '5.3.1'
-    springBootVersion = '3.3.6'
+    springBootVersion = '3.3.5'
     springGraphqlVersion = '1.3.3'
 }
 
@@ -71,10 +71,11 @@ configurations {
 
 repositories {
     mavenLocal()
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/remote-repos' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/core-tech-maven-release' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/java-platform-maven-release' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/ncg_release' }
+    mavenCentral()
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/remote-repos' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/core-tech-maven-release' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/java-platform-maven-release' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/ncg_release' }
 }
 
 dependencyManagement {
@@ -85,7 +86,7 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation "com.yahoo.media.ncg:ncg-common-lib:$ncgCommonVersion"
+//    implementation "com.yahoo.media.ncg:ncg-common-lib:$ncgCommonVersion"
 
     implementation "com.netflix.graphql.dgs:graphql-dgs-extended-scalars"
     implementation "com.netflix.graphql.dgs:graphql-dgs-client"

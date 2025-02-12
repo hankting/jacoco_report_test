@@ -28,7 +28,8 @@ jobs:
         shell: bash
         run: |
           if [ -f "build.gradle" ]; then
-            ./gradlew clean buildRpm test
+#            ./gradlew clean buildRpm test
+             ./gradlew clean build
           fi
       - name: Add coverage to PR
         id: jacoco
