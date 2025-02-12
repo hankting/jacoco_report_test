@@ -24,6 +24,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: Build rpm and test
+        shell: bash
+        run: |
+          if [ -f "build.gradle" ]; then
+            ./gradlew clean buildRpm test
+          fi
       - name: Add coverage to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.7.1
