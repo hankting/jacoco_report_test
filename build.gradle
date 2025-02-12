@@ -181,11 +181,16 @@ jacocoTestReport {
 
 private excludeClassFilesForReport(classDirectories) {
     classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, exclude: [
-                "**/com/yahoo/media/ncg/jarvis/graphql/generated/**",
-                "**/com/yahoo/media/ncg/jarvis/graphql/SubgraphServer.class",
-                "**/com/yahoo/media/ncg/jarvis/graphql/test/**"
-        ])
+        fileTree(
+                dir: it,
+                exclude: [
+                        "**/com/yahoo/media/ncg/jarvis/graphql/generated/**",
+                        "**/com/yahoo/media/ncg/jarvis/graphql/SubgraphServer.class"
+                ],
+                includes: [
+                        "**/com/yahoo/media/ncg/jarvis/graphql/**/*.class",
+                ]
+        )
     }))
 }
 
