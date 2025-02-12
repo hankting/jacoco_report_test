@@ -14,7 +14,8 @@ permissions:
 
 jobs:
   build-deploy:
-    runs-on: yahoo-enterprise-ubuntu-x86
+#    runs-on: yahoo-enterprise-ubuntu-x86
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
