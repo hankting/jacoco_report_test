@@ -41,3 +41,4 @@ jobs:
           min-coverage-changed-files: 60
           continue-on-error: false
           debug-mode: true
+#          skip-if-no-changes: true
