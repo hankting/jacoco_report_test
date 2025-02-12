@@ -19,17 +19,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
+
       - name: Build rpm and test
         shell: bash
         run: |
           if [ -f "build.gradle" ]; then
              ./gradlew clean build
           fi
+
       - name: Add coverage to PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.7.1
@@ -42,3 +45,17 @@ jobs:
           continue-on-error: false
           debug-mode: true
 #          skip-if-no-changes: true
+
+      - name: Fail PR if overall coverage is less than threshold
+        if: ${{ steps.jacoco.outputs.coverage-overall < 50.0 }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Overall coverage is less than 50%!')
+
+      - name: Fail PR if changed files coverage is less than threshold
+        if: ${{ steps.jacoco.outputs.coverage-changed-files < 50.0 }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Changed files coverage is less than 50%!')
