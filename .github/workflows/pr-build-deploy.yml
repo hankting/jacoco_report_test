@@ -59,3 +59,9 @@ jobs:
         with:
           script: |
             core.setFailed('Changed files coverage is less than 50%!')
+
+      - name: Store HTML coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: "${{github.workspace}}/build/reports/jacoco/test/html/"
