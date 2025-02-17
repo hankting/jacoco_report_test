@@ -50,6 +50,9 @@ jobs:
           min-coverage-changed-files: 60
           continue-on-error: false
           debug-mode: true
+          title: '# :lobster: Coverage Report'
+          pass-emoji: ':green_circle:'
+          fail-emoji: ':red_circle:'
 #          skip-if-no-changes: true
 
       - name: Log coverage percentage
