@@ -9,6 +9,9 @@ import java.util.UUID;
 
 @Slf4j
 public class ContentUtils {
+    private ContentUtils() {
+    }
+
     public static boolean isValidUuid(String id) {
         try {
             if (Strings.isEmpty(id) || Strings.isBlank(id)) {
