@@ -87,7 +87,8 @@ jobs:
             ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
 #            ${{ github.workspace }}/${{ inputs.jacoco_xml_report_path }}
           token: ${{ github.token }}
-          min-coverage-overall: ${{ inputs.overall_coverage_threshold }}
+#          min-coverage-overall: ${{ inputs.overall_coverage_threshold }}
+          min-coverage-overall: 50
           min-coverage-changed-files: ${{ inputs.changed_files_coverage_threshold }}
           continue-on-error: false
           skip-if-no-changes: false
@@ -104,7 +105,8 @@ jobs:
           echo "Changed Lines coverage ${{ steps.jacoco.outputs.coverage-changed-percentage }}"
 
       - name: Fail PR if overall coverage is less than threshold
-        if: ${{ !inputs.skip_coverage_check && steps.jacoco.outputs.coverage-overall < inputs.overall_coverage_threshold }}
+#        if: ${{ !inputs.skip_coverage_check && steps.jacoco.outputs.coverage-overall < inputs.overall_coverage_threshold }}
+        if: ${{ !inputs.skip_coverage_check && steps.jacoco.outputs.coverage-overall < 50 }}
         uses: actions/github-script@v6
         with:
           script: |
