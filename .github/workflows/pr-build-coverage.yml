@@ -96,6 +96,7 @@ jobs:
           pass-emoji: ':green_circle:'
           fail-emoji: ':red_circle:'
           update-comment: ${{ inputs.update_comment }}
+          debug-mode: true
 
       - name: Log coverage percentage
         if: ${{ !inputs.skip_coverage_check }}
