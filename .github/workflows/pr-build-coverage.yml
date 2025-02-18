@@ -39,7 +39,7 @@ on:
       jacoco_xml_report_path:
         description: 'Path to XML coverage report. Default is build/reports/jacoco/test/jacocoTestReport.xml'
         required: false
-        default: 'build/reports/jacoco/test/jacocoTestReport.xml'
+        default: '**/build/reports/jacoco/test/jacocoTestReport.xml'
         type: boolean
 
 permissions:
