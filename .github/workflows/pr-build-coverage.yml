@@ -7,9 +7,9 @@ on:
   workflow_call:
     inputs:
       overall_coverage_threshold:
-        description: 'Overall coverage threshold. Default is 0'
+        description: 'Overall coverage threshold. Default is 50'
         required: false
-        default: 0
+        default: 50
         type: number
       changed_files_coverage_threshold:
         description: 'Changed files coverage threshold. Default is 80'
