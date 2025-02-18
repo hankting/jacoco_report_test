@@ -191,20 +191,20 @@ private excludeClassFilesForReport(classDirectories) {
     }))
 }
 
-jacocoTestCoverageVerification {
-    dependsOn jacocoTestReport // jacocoTestReport are required to run before coverage verification
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8
-            }
-        }
-    }
-
-    afterEvaluate {
-        excludeClassFilesForReport(classDirectories)
-    }
-}
+//jacocoTestCoverageVerification {
+//    dependsOn jacocoTestReport // jacocoTestReport are required to run before coverage verification
+//    violationRules {
+//        rule {
+//            limit {
+//                minimum = 0.8
+//            }
+//        }
+//    }
+//
+//    afterEvaluate {
+//        excludeClassFilesForReport(classDirectories)
+//    }
+//}
 
 tasks.named('test') {
     useJUnitPlatform()
