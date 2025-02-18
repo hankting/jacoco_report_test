@@ -55,7 +55,7 @@ jobs:
           fail-emoji: ':red_circle:'
           update-comment: true
 #          skip-if-no-changes: true
-#          debug-mode: true
+          debug-mode: true
 
       - name: Log coverage percentage
         run: |
