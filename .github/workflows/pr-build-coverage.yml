@@ -9,18 +9,18 @@ on:
       overall_coverage_threshold:
         description: 'Overall coverage threshold. Default is 50'
         required: false
-        default: '50'
-        type: string
+        default: 50
+        type: number
       changed_files_coverage_threshold:
         description: 'Changed files coverage threshold. Default is 80'
         required: false
-        default: '80'
-        type: string
+        default: 80
+        type: number
       changed_lines_coverage_threshold:
         description: 'Changed lines coverage threshold. Default is 80'
         required: false
-        default: '80'
-        type: string
+        default: 80
+        type: number
       skip_coverage_check:
         description: 'Skip coverage check. Default is false'
         required: false
@@ -87,8 +87,8 @@ jobs:
             ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
 #            ${{ github.workspace }}/${{ inputs.jacoco_xml_report_path }}
           token: ${{ github.token }}
-#          min-coverage-overall: ${{ inputs.overall_coverage_threshold }}
-          min-coverage-overall: 50
+          min-coverage-overall: ${{ inputs.overall_coverage_threshold }}
+#          min-coverage-overall: 50
           min-coverage-changed-files: ${{ inputs.changed_files_coverage_threshold }}
           continue-on-error: false
           skip-if-no-changes: false
