@@ -69,6 +69,12 @@ jobs:
           if [ -f "build.gradle" ]; then
              ./gradlew clean build
           fi
+          echo "overall_coverage_threshold: ${{ inputs.overall_coverage_threshold }}"
+          echo "changed_files_coverage_threshold: ${{ inputs.changed_files_coverage_threshold }}"
+          echo "changed_lines_coverage_threshold: ${{ inputs.changed_lines_coverage_threshold }}"
+          echo "skip_coverage_check: ${{ inputs.skip_coverage_check }}"
+          echo "jacoco_html_report_path: ${{ inputs.jacoco_html_report_path }}"
+          echo "jacoco_xml_report_path: ${{ inputs.jacoco_xml_report_path }}"
 
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v4
