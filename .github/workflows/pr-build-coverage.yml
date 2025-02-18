@@ -110,11 +110,14 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            core.setFailed("Overall coverage is less than ${{ inputs.overall_coverage_threshold }}!");
+            core.setFailed("Overall coverage is less than 50!");
+#            core.setFailed("Overall coverage is less than ${{ inputs.overall_coverage_threshold }}!");
 
       - name: Fail PR if changed lines coverage is less than threshold
-        if: ${{ !inputs.skip_coverage_check && steps.jacoco.outputs.coverage-changed-percentage < inputs.changed_lines_coverage_threshold }}
+#        if: ${{ !inputs.skip_coverage_check && steps.jacoco.outputs.coverage-changed-percentage < inputs.changed_lines_coverage_threshold }}
+        if: ${{ !inputs.skip_coverage_check && steps.jacoco.outputs.coverage-changed-percentage < 80 }}
         uses: actions/github-script@v6
         with:
           script: |
-            core.setFailed("Changed lines coverage is less than ${{ inputs.changed_lines_coverage_threshold }}!");
+            core.setFailed("Changed lines coverage is less than 80!");
+#            core.setFailed("Changed lines coverage is less than ${{ inputs.changed_lines_coverage_threshold }}!");
