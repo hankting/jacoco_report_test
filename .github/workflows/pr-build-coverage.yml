@@ -5,6 +5,11 @@ on:
       - main
   workflow_call:
     inputs:
+      username:
+        description: 'A username passed from the caller workflow'
+        default: 'john-doe'
+        required: false
+        type: string
       overall_coverage_threshold:
         description: 'Overall coverage threshold. Default is 50'
         required: false
@@ -54,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print the inputs to STDOUT
-        run: echo The username is ${{ inputs.overall_coverage_threshold }}
+        run: echo The username is ${{ inputs.username }}
 
       - name: Checkout
         uses: actions/checkout@v4
