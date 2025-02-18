@@ -4,7 +4,8 @@ on:
   pull_request:
     branches:
       - main
-  workflow_call:
+#  workflow_call:
+  workflow_dispatch:
     inputs:
       overall_coverage_threshold:
         description: 'Overall coverage threshold. Default is 50'
@@ -69,12 +70,12 @@ jobs:
           if [ -f "build.gradle" ]; then
              ./gradlew clean build
           fi
-          echo "overall_coverage_threshold: ${{ github.event.inputs.overall_coverage_threshold }}"
-          echo "changed_files_coverage_threshold: ${{ github.event.inputs.changed_files_coverage_threshold }}"
-          echo "changed_lines_coverage_threshold: ${{ github.event.inputs.changed_lines_coverage_threshold }}"
-          echo "skip_coverage_check: ${{ github.event.inputs.skip_coverage_check }}"
-          echo "jacoco_html_report_path: ${{ github.event.inputs.jacoco_html_report_path }}"
-          echo "jacoco_xml_report_path: ${{ github.event.inputs.jacoco_xml_report_path }}"
+          echo "overall_coverage_threshold: ${{ inputs.overall_coverage_threshold }}"
+#          echo "changed_files_coverage_threshold: ${{ github.event.inputs.changed_files_coverage_threshold }}"
+#          echo "changed_lines_coverage_threshold: ${{ github.event.inputs.changed_lines_coverage_threshold }}"
+#          echo "skip_coverage_check: ${{ github.event.inputs.skip_coverage_check }}"
+#          echo "jacoco_html_report_path: ${{ github.event.inputs.jacoco_html_report_path }}"
+#          echo "jacoco_xml_report_path: ${{ github.event.inputs.jacoco_xml_report_path }}"
 
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v4
