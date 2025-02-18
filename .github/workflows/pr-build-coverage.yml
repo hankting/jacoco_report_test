@@ -84,7 +84,7 @@ jobs:
         if: ${{ !inputs.skip_coverage_check }}
         with:
           paths: |
-            ${{ github.workspace }}/**/${{ inputs.jacoco_xml_report_path }}
+            ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
 #            ${{ github.workspace }}/${{ inputs.jacoco_xml_report_path }}
           token: ${{ github.token }}
           min-coverage-overall: ${{ inputs.overall_coverage_threshold }}
