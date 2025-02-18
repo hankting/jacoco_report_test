@@ -22,11 +22,11 @@ public class JarvisApiHitTest {
         assertTrue(jarvisHit.isTypeTest());
     }
 
-    @Test
-    void testIsCarmotContent() {
-        var jarvisHit = new JarvisApiHit()
-            .setId("dummyId")
-            .setType("ymedia:type=test");
-        assertTrue(jarvisHit.isCarmotContent());
-    }
+//    @Test
+//    void testIsCarmotContent() {
+//        var jarvisHit = new JarvisApiHit()
+//            .setId("dummyId")
+//            .setType("ymedia:type=test");
+//        assertTrue(jarvisHit.isCarmotContent());
+//    }
 }

@@ -69,8 +69,7 @@ public class JarvisApiHit {
                || isTypeOffnet()
                || isTypeSlideshow()
                || isTypeOutlink()
-               || isTypeBlogPost()
-               || isTypeTest();
+               || isTypeBlogPost();
     }
 
     public boolean isCarmotEditorialPackage() {
