@@ -13,4 +13,12 @@ public class JarvisApiHitTest {
             .setType("ymedia:type=blogpost");
         assertTrue(jarvisHit.isTypeBlogPost());
     }
+
+    @Test
+    void testIsTypeTest() {
+        var jarvisHit = new JarvisApiHit()
+            .setId("dummyId")
+            .setType("ymedia:type=test");
+        assertTrue(jarvisHit.isTypeTest());
+    }
 }
