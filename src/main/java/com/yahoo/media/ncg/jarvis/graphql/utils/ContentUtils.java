@@ -11,7 +11,7 @@ import java.util.UUID;
 public class ContentUtils {
     public static boolean isValidUuid(String id) {
         try {
-            if (Strings.isBlank(id)) {
+            if (Strings.isEmpty(id) || Strings.isBlank(id)) {
                 return false;
             }
             UUID.fromString(id);
