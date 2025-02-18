@@ -9,18 +9,18 @@ on:
       overall_coverage_threshold:
         description: 'Overall coverage threshold. Default is 50'
         required: false
-        default: 50
-        type: number
+        default: '50'
+        type: string
       changed_files_coverage_threshold:
         description: 'Changed files coverage threshold. Default is 80'
         required: false
-        default: 80
-        type: number
+        default: '80'
+        type: string
       changed_lines_coverage_threshold:
         description: 'Changed lines coverage threshold. Default is 80'
         required: false
-        default: 80
-        type: number
+        default: '80'
+        type: string
       skip_coverage_check:
         description: 'Skip coverage check. Default is false'
         required: false
