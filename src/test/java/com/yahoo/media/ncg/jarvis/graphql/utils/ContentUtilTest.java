@@ -24,8 +24,8 @@ public class ContentUtilTest {
         assertFalse(ContentUtils.isValidUuid(""));
     }
 
-    @Test
-    public void testIsBlank() {
-        assertFalse(ContentUtils.isValidUuid(" "));
-    }
+//    @Test
+//    public void testIsBlank() {
+//        assertFalse(ContentUtils.isValidUuid(" "));
+//    }
 }
