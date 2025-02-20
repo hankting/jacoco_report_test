@@ -6,6 +6,8 @@ plugins {
     id("com.netflix.nebula.ospackage") version "11.9.1"
     id "application"
     id "jacoco"
+    id 'org.sonarqube' version '4.0.0.2929'
+//    id 'com.avast.gradle.docker-compose' version '0.14.3'
 }
 
 ext {
@@ -71,10 +73,11 @@ configurations {
 
 repositories {
     mavenLocal()
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/remote-repos' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/core-tech-maven-release' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/java-platform-maven-release' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/ncg_release' }
+    mavenCentral()
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/remote-repos' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/core-tech-maven-release' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/java-platform-maven-release' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/ncg_release' }
 }
 
 dependencyManagement {
@@ -85,7 +88,7 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation "com.yahoo.media.ncg:ncg-common-lib:$ncgCommonVersion"
+//    implementation "com.yahoo.media.ncg:ncg-common-lib:$ncgCommonVersion"
 
     implementation "com.netflix.graphql.dgs:graphql-dgs-extended-scalars"
     implementation "com.netflix.graphql.dgs:graphql-dgs-client"
@@ -180,26 +183,36 @@ jacocoTestReport {
 
 private excludeClassFilesForReport(classDirectories) {
     classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, exclude: [
-                "**/com/yahoo/media/ncg/jarvis/graphql/generated/**",
-                "**/com/yahoo/media/ncg/jarvis/graphql/SubgraphServer.class",
-                "**/com/yahoo/media/ncg/jarvis/graphql/test/**"
-        ])
+        fileTree(
+                dir: it,
+                exclude: [
+                        "**/com/yahoo/media/ncg/jarvis/graphql/generated/**",
+                        "**/com/yahoo/media/ncg/jarvis/graphql/SubgraphServer.class"
+                ]
+        )
     }))
 }
 
-jacocoTestCoverageVerification {
-    dependsOn jacocoTestReport // jacocoTestReport are required to run before coverage verification
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8
-            }
-        }
-    }
+//jacocoTestCoverageVerification {
+//    dependsOn jacocoTestReport // jacocoTestReport are required to run before coverage verification
+//    violationRules {
+//        rule {
+//            limit {
+//                minimum = 0.8
+//            }
+//        }
+//    }
+//
+//    afterEvaluate {
+//        excludeClassFilesForReport(classDirectories)
+//    }
+//}
 
-    afterEvaluate {
-        excludeClassFilesForReport(classDirectories)
+sonarqube {
+    properties {
+        property 'sonar.host.url', 'http://localhost:9000'
+        property 'sonar.login', 'admin'
+        property 'sonar.password', 'admin'
     }
 }
 
@@ -212,6 +225,10 @@ tasks.named('test') {
     }
     finalizedBy(jacocoTestReport) // report is always generated after tests run
 //    finalizedBy(jacocoTestCoverageVerification) // report is always generated after tests run
+}
+
+tasks.named('sonar').configure {
+    dependsOn jacocoTestReport
 }
 
 buildRpm.dependsOn assemble

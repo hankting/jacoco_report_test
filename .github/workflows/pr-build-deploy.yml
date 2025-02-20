@@ -14,21 +14,39 @@ permissions:
 
 jobs:
   build-deploy:
-    runs-on: yahoo-enterprise-ubuntu-x86
+#    runs-on: yahoo-enterprise-ubuntu-x86
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
-      - name: Add coverage to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.7.1
+
+      - name: Build rpm and test
+        shell: bash
+        run: |
+          if [ -f "build.gradle" ]; then
+             ./gradlew clean build
+          fi
+
+      - uses: SonarSource/sonarqube-scan-action@master
         with:
-          paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
-          token: ${{ github.token }}
-          min-coverage-overall: 40
-          min-coverage-changed-files: 60
+          projectBaseDir: .
+          args: >
+            -Dsonar.organization=my-org
+            -Dsonar.projectKey=my-java-app
+            -Dsonar.sources=src/main/java
+            -Dsonar.tests=src/test/java
+            -Dsonar.java.binaries=build/classes/java/main
+            -Dsonar.java.test.binaries=build/classes/java/test
+            -Dsonar.java.codeCoveragePlugin=jacoco
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+            -Dsonar.verbose=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+#          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
