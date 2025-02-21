@@ -38,7 +38,7 @@ jobs:
           projectBaseDir: .
           args: >
             -Dsonar.organization=my-org
-            -Dsonar.projectKey=my-java-app
+            -Dsonar.projectKey=jacoco_report_test
             -Dsonar.sources=src/main/java
             -Dsonar.tests=src/test/java
             -Dsonar.java.binaries=build/classes/java/main
