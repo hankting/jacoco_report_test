@@ -37,7 +37,7 @@ jobs:
         with:
           projectBaseDir: .
           args: >
-            -Dsonar.organization=my-org
+            -Dsonar.organization=my-java-app
             -Dsonar.projectKey=hankting_jacoco_report_test
             -Dsonar.sources=src/main/java
             -Dsonar.tests=src/test/java
