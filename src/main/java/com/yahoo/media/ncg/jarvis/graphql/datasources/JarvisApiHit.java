@@ -78,6 +78,7 @@ public class JarvisApiHit {
         return isTypeEditorialPackage();
     }
 
+
 //    public boolean isTypeTest() {
 //        return TYPE_TEST.equalsIgnoreCase(type);
 //    }
