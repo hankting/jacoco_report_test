@@ -17,7 +17,7 @@ public class JarvisApiHit {
     public static final String TYPE_OUTLINK = "ymedia:type=outlink";
     public static final String TYPE_SLIDESHOW = "ymedia:type=slideshow";
     public static final String TYPE_STORY_CLUSTER = "ymedia:type=story-cluster";
-//    public static final String TYPE_TEST = "ymedia:type=test";
+    public static final String TYPE_TEST = "ymedia:type=test";
 //    public static final String TYPE_TEST2 = "ymedia:type=test2";
 //    public static final String TYPE_TEST3 = "ymedia:type=test3";
 
@@ -79,10 +79,10 @@ public class JarvisApiHit {
     }
 
 
-//    public boolean isTypeTest() {
-//        return TYPE_TEST.equalsIgnoreCase(type);
-//    }
-//
+    public boolean isTypeTest() {
+        return TYPE_TEST.equalsIgnoreCase(type);
+    }
+
 //    public boolean isTypeTest2() {
 //        return TYPE_TEST2.equalsIgnoreCase(type);
 //    }
