@@ -30,13 +30,21 @@ public class JarvisApiHitTest {
 //        assertTrue(jarvisHit.isTypeTest());
 //    }
 
-//    @Test
-//    void testIsTypeTest2() {
-//        var jarvisHit = new JarvisApiHit()
-//            .setId("dummyId")
-//            .setType("ymedia:type=test2");
-//        assertTrue(jarvisHit.isTypeTest2());
-//    }
+    @Test
+    void testIsTypeTest2() {
+        var jarvisHit = new JarvisApiHit()
+            .setId("dummyId")
+            .setType("ymedia:type=test2");
+        assertTrue(jarvisHit.isTypeTest2());
+    }
+
+    @Test
+    void testIsTypeTest3() {
+        var jarvisHit = new JarvisApiHit()
+            .setId("dummyId")
+            .setType("ymedia:type=test2");
+        assertTrue(jarvisHit.isTypeTest2());
+    }
 
 //    @Test
 //    void testIsCarmotContent() {
