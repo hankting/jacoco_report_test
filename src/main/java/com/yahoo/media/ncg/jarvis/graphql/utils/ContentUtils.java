@@ -17,10 +17,12 @@ public class ContentUtils {
             if (Strings.isEmpty(id) || Strings.isBlank(id)) {
                 return false;
             }
+
             UUID.fromString(id);
             return true;
         } catch (Exception ignored) {
             return false;
         }
     }
+
 }

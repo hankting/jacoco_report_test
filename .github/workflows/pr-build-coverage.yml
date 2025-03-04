@@ -77,11 +77,10 @@ jobs:
       - name: Check code diff
         shell: bash
         run: |
-          echo "event_name=${{ github.event_name }} repo=${{github.repository}} pr=${{github.event.pull_request.number}} before=${{ github.event.before }} after=${{ github.event.after }}"
+          echo "event_name=${{ github.event_name }} repo=${{github.repository}} pr=${{github.event.pull_request.number}} before=${{ github.event.before }} after=${{ github.event.after }} head_sha=${{ github.event.pull_request.head.sha }} sha= ${{ github.sha }}"
           echo "run git diff, base_ref=${GITHUB_BASE_REF}, head_ref=${GITHUB_HEAD_REF}"
           git fetch origin --depth=1
           git diff --name-only origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
-
 
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v4
