@@ -77,8 +77,9 @@ jobs:
       - name: Check code diff
         shell: bash
         run: |
-          echo "run git diff"
-          git diff origin/main origin/${GITHUB_HEAD_REF}
+          echo "run git diff, base_ref=$GITHUB_BASE_REF, head_ref=$GITHUB_HEAD_REF"
+#           git fetch origin $GITHUB_BASE_REF --depth=1
+          git diff --name-only origin/main origin/${GITHUB_HEAD_REF}
 
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v4
