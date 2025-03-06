@@ -26,4 +26,5 @@ public class SubgraphServer {
     public Instrumentation tracingInstrumentation(){
         return new FederatedTracingInstrumentation();
     }
+
 }

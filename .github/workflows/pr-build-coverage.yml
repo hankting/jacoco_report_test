@@ -79,8 +79,18 @@ jobs:
         run: |
           echo "event_name=${{ github.event_name }} repo=${{github.repository}} pr=${{github.event.pull_request.number}} before=${{ github.event.before }} after=${{ github.event.after }} head_sha=${{ github.event.pull_request.head.sha }} base_sha=${{ github.event.pull_request.base.sha }} sha=${{ github.sha }}"
           echo "run git diff, base_ref=${GITHUB_BASE_REF}, head_ref=${GITHUB_HEAD_REF}"
-          git fetch origin --depth=1
-          git diff --name-only origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
+          base_sha=${{ github.event.pull_request.base.sha }}
+          head_sha=${{ github.event.pull_request.head.sha }}
+          changed_files=$(git diff --name-only --diff-filter=MAR $base_sha $head_sha | grep "src/main/java/" | grep -e "\.java$" || true)
+          echo "changed_files=[$changed_files]"
+          if [ -n "$changed_files" ]; then
+            changed_files_stat=$(git diff --stat --ignore-blank-lines $base_sha $head_sha $changed_files)
+            if [ -n "$changed_files_stat" ]; then
+              echo "Changed files found, changed_files_stat=[$changed_files_stat]"
+            else
+              echo "No changed files found"
+            fi
+          fi
 
       - name: Upload HTML coverage report
         uses: actions/upload-artifact@v4
