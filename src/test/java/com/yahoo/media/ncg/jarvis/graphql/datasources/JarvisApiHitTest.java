@@ -52,13 +52,13 @@ public class JarvisApiHitTest {
 //        assertTrue(jarvisHit.isTypeEditorialPackage());
 //    }
 //
-//    @Test
-//    void testIsTypeStory() {
-//        var jarvisHit = new JarvisApiHit()
-//            .setId("dummyId")
-//            .setType("ymedia:type=story");
-//        assertTrue(jarvisHit.isTypeStory());
-//    }
+    @Test
+    void testIsTypeStory() {
+        var jarvisHit = new JarvisApiHit()
+            .setId("dummyId")
+            .setType("ymedia:type=story2");
+        assertTrue(jarvisHit.isTypeStory());
+    }
 //
 //    @Test
 //    void testIsTypeStoryCluster() {

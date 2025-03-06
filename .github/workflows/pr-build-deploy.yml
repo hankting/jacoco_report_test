@@ -41,6 +41,7 @@ jobs:
           path: './build/test-results/test/*.xml'
 
       - name: Publish Test Report as PR Comment
+        if: success() || failure()
         uses: dorny/test-reporter@v1
         with:
           name: Test Report
