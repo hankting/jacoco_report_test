@@ -14,21 +14,37 @@ permissions:
 
 jobs:
   build-deploy:
-    runs-on: yahoo-enterprise-ubuntu-x86
+    permissions: write-all
+    #    runs-on: yahoo-enterprise-ubuntu-x86
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
-      - name: Add coverage to PR
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.7.1
+
+      - name: Build rpm and test
+        shell: bash
+        run: |
+          if [ -f "build.gradle" ]; then
+             ./gradlew clean build
+          fi
+
+      - name: Upload Junit Test Result
+        uses: actions/upload-artifact@v4
         with:
-          paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
+          name: test-results
+          path: './build/test-results/test/*.xml'
+
+      - name: Publish Test Report as PR Comment
+        if: success() || failure()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Test Report
+          path: './build/test-results/test/*.xml'
+          reporter: java-junit
           token: ${{ github.token }}
-          min-coverage-overall: 40
-          min-coverage-changed-files: 60
