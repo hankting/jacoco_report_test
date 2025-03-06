@@ -33,16 +33,16 @@ jobs:
              ./gradlew clean build
           fi
 
-      - name: Upload Jacoco Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: '**/build/reports/jacoco/test/jacocoTestReport.xml'
+#      - name: Upload Junit Test Result
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: test-results
+#          path: './build/test-results/test/*.xml'
 
-      - name: Publish Coverage Report as PR Comment
+      - name: Publish Test Report as PR Comment
         uses: dorny/test-reporter@v1
         with:
-          name: Jacoco Coverage Report
-          path: '**/build/reports/jacoco/test/jacocoTestReport.xml'
-          reporter: java-jacoco
+          name: Test Report
+          path: './build/test-results/test/*.xml'
+          reporter: java-junit
           token: ${{ github.token }}
