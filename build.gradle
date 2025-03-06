@@ -86,7 +86,7 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation "com.yahoo.media.ncg:ncg-common-lib:$ncgCommonVersion"
+//    implementation "com.yahoo.media.ncg:ncg-common-lib:$ncgCommonVersion"
 
     implementation "com.netflix.graphql.dgs:graphql-dgs-extended-scalars"
     implementation "com.netflix.graphql.dgs:graphql-dgs-client"
