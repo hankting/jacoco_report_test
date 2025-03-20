@@ -185,9 +185,9 @@ private excludeClassFilesForReport(classDirectories) {
                 dir: it,
                 exclude: [
                         "**/com/yahoo/media/ncg/jarvis/graphql/generated/**",
-                        "**/com/yahoo/media/ncg/jarvis/graphql/SubgraphServer.class"
+                        "**/com/yahoo/media/ncg/jarvis/graphql/SubgraphServer.class",
+                        "**/com/yahoo/media/ncg/jarvis/graphql/utils/ContentUtilsV2.class"
                 ]
-//                        "**/com/yahoo/media/ncg/jarvis/graphql/utils/ContentUtilsV2.class"
         )
     }))
 }
