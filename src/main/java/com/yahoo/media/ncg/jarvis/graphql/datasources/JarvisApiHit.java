@@ -17,6 +17,7 @@ public class JarvisApiHit {
     public static final String TYPE_OUTLINK = "ymedia:type=outlink";
     public static final String TYPE_SLIDESHOW = "ymedia:type=slideshow";
     public static final String TYPE_STORY_CLUSTER = "ymedia:type=story-cluster";
+    public static final String TYPE_TEST = "ymedia:type=test";
 
     private String id;
     private String type;
@@ -73,6 +74,10 @@ public class JarvisApiHit {
 
     public boolean isCarmotEditorialPackage() {
         return isTypeEditorialPackage();
+    }
+
+    public boolean isTypeTest() {
+        return TYPE_TEST.equalsIgnoreCase(type);
     }
 }
 
