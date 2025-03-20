@@ -103,7 +103,8 @@ jobs:
       - name: Add coverage to PR
         id: jacoco
         #uses: madrapps/jacoco-report@v1.7.1
-        uses: ALonelyDuck/jacoco-report@v1.2
+#        uses: ALonelyDuck/jacoco-report@v1.2
+        uses: hankting/jacoco-report@NEXUS-658
         with:
           paths: |
             ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
@@ -116,12 +117,14 @@ jobs:
           pass-emoji: ':green_circle:'
           fail-emoji: ':red_circle:'
           update-comment: false
+          debug-mode: true
 
       - name: Log coverage percentage
         run: |
           echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
           echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
           echo "Changed Lines (New Code) coverage ${{ steps.jacoco.outputs.coverage-changed-percentage }}"
+          echo "Is Files Changed ${{ steps.jacoco.outputs.is-files-changed }}"
 
       #      - name: Fail PR if overall coverage is less than threshold
       #        if: ${{ steps.jacoco.outputs.coverage-overall < 50 }}
