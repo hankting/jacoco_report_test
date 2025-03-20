@@ -134,7 +134,7 @@ jobs:
       #            core.setFailed("Overall coverage is less than 50!");
 
       - name: Fail PR if changed lines coverage is less than threshold
-        if: ${{ steps.jacoco.outputs.coverage-changed-percentage < 80 }}
+        if: ${{ steps.jacoco.outputs.is-files-changed == 'true' && steps.jacoco.outputs.coverage-changed-percentage < 80 }}
         uses: actions/github-script@v6
         with:
           script: |
