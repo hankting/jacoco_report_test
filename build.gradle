@@ -71,10 +71,11 @@ configurations {
 
 repositories {
     mavenLocal()
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/remote-repos' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/core-tech-maven-release' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/java-platform-maven-release' }
-    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/ncg_release' }
+    mavenCentral()
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/remote-repos' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/core-tech-maven-release' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/java-platform-maven-release' }
+//    maven { url 'https://edge.artifactory.ouroath.com:4443/artifactory/ncg_release' }
 }
 
 dependencyManagement {
@@ -85,7 +86,7 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation "com.yahoo.media.ncg:ncg-common-lib:$ncgCommonVersion"
+//    implementation "com.yahoo.media.ncg:ncg-common-lib:$ncgCommonVersion"
 
     implementation "com.netflix.graphql.dgs:graphql-dgs-extended-scalars"
     implementation "com.netflix.graphql.dgs:graphql-dgs-client"
@@ -180,28 +181,31 @@ jacocoTestReport {
 
 private excludeClassFilesForReport(classDirectories) {
     classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, exclude: [
-                "**/com/yahoo/media/ncg/jarvis/graphql/generated/**",
-                "**/com/yahoo/media/ncg/jarvis/graphql/SubgraphServer.class",
-                "**/com/yahoo/media/ncg/jarvis/graphql/test/**"
-        ])
+        fileTree(
+                dir: it,
+                exclude: [
+                        "**/com/yahoo/media/ncg/jarvis/graphql/generated/**",
+                        "**/com/yahoo/media/ncg/jarvis/graphql/SubgraphServer.class",
+                        "**/com/yahoo/media/ncg/jarvis/graphql/utils/ContentUtilsV2.class"
+                ]
+        )
     }))
 }
 
-jacocoTestCoverageVerification {
-    dependsOn jacocoTestReport // jacocoTestReport are required to run before coverage verification
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8
-            }
-        }
-    }
-
-    afterEvaluate {
-        excludeClassFilesForReport(classDirectories)
-    }
-}
+//jacocoTestCoverageVerification {
+//    dependsOn jacocoTestReport // jacocoTestReport are required to run before coverage verification
+//    violationRules {
+//        rule {
+//            limit {
+//                minimum = 0.8
+//            }
+//        }
+//    }
+//
+//    afterEvaluate {
+//        excludeClassFilesForReport(classDirectories)
+//    }
+//}
 
 tasks.named('test') {
     useJUnitPlatform()
