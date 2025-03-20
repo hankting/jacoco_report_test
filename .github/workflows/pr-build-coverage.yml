@@ -121,7 +121,7 @@ jobs:
         run: |
           echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
           echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
-          echo "Changed Lines coverage ${{ steps.jacoco.outputs.coverage-changed-percentage }}"
+          echo "Changed Lines (New Code) coverage ${{ steps.jacoco.outputs.coverage-changed-percentage }}"
 
 #      - name: Fail PR if overall coverage is less than threshold
 #        if: ${{ steps.jacoco.outputs.coverage-overall < 50 }}
