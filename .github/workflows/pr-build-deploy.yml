@@ -107,7 +107,7 @@ jobs:
         uses: hankting/jacoco-report@NEXUS-658
         with:
           paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
+            ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
           token: ${{ github.token }}
           min-coverage-overall: 0
           min-coverage-changed-files: 80
