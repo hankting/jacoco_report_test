@@ -1,9 +1,50 @@
-name: pr-build-deploy
-
+name: 'pr-build-coverage'
 on:
   pull_request:
     branches:
       - main
+#  workflow_dispatch:
+#    inputs:
+#      username:
+#        description: 'A username passed from the caller workflow'
+#        default: 'john-doe'
+#        required: false
+#        type: string
+#      overall_coverage_threshold:
+#        description: 'Overall coverage threshold. Default is 50'
+#        required: false
+#        default: 50
+#        type: number
+#      changed_files_coverage_threshold:
+#        description: 'Changed files coverage threshold. Default is 80'
+#        required: false
+#        default: 80
+#        type: number
+#      changed_lines_coverage_threshold:
+#        description: 'Changed lines coverage threshold. Default is 80'
+#        required: false
+#        default: 80
+#        type: number
+#      skip_coverage_check:
+#        description: 'Skip coverage check. Default is false'
+#        required: false
+#        default: true
+#        type: boolean
+#      update_comment:
+#        description: 'Update PR comment with coverage report. Default is true'
+#        required: false
+#        default: true
+#        type: boolean
+#      jacoco_html_report_path:
+#        description: 'Path to HTML coverage report. Default is build/reports/jacoco/test/html/'
+#        required: false
+#        default: 'build/reports/jacoco/test/html/'
+#        type: string
+#      jacoco_xml_report_path:
+#        description: 'Path to XML coverage report. Default is build/reports/jacoco/test/jacocoTestReport.xml'
+#        required: false
+#        default: 'build/reports/jacoco/test/jacocoTestReport.xml'
+#        type: string
 
 permissions:
   actions: read
@@ -14,21 +55,87 @@ permissions:
 
 jobs:
   build-deploy:
-    runs-on: yahoo-enterprise-ubuntu-x86
+    #    runs-on: yahoo-enterprise-ubuntu-x86
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
+
+      - name: Build rpm and test
+        shell: bash
+        run: |
+          if [ -f "build.gradle" ]; then
+             ./gradlew clean build
+          fi
+
+      - name: Check code diff
+        shell: bash
+        run: |
+          echo "event_name=${{ github.event_name }} repo=${{github.repository}} pr=${{github.event.pull_request.number}} before=${{ github.event.before }} after=${{ github.event.after }} head_sha=${{ github.event.pull_request.head.sha }} base_sha=${{ github.event.pull_request.base.sha }} sha=${{ github.sha }}"
+          echo "run git diff, base_ref=${GITHUB_BASE_REF}, head_ref=${GITHUB_HEAD_REF}"
+          base_sha=${{ github.event.pull_request.base.sha }}
+          head_sha=${{ github.event.pull_request.head.sha }}
+          changed_files=$(git diff --name-only --diff-filter=MAR $base_sha $head_sha | grep "src/main/java/" | grep -e "\.java$" || true)
+          echo "changed_files=[$changed_files]"
+          if [ -n "$changed_files" ]; then
+            changed_files_stat=$(git diff --stat --ignore-blank-lines $base_sha $head_sha $changed_files)
+            if [ -n "$changed_files_stat" ]; then
+              echo "Changed files found, changed_files_stat=[$changed_files_stat]"
+            else
+              echo "No changed files found"
+            fi
+          fi
+
+      - name: Upload HTML coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: "${{ github.workspace }}/build/reports/jacoco/test/html/"
+
       - name: Add coverage to PR
         id: jacoco
-        uses: madrapps/jacoco-report@v1.7.1
+        #uses: madrapps/jacoco-report@v1.7.1
+#        uses: ALonelyDuck/jacoco-report@v1.2
+        uses: hankting/jacoco-report@NEXUS-658
         with:
           paths: |
-            ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
+            ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
           token: ${{ github.token }}
-          min-coverage-overall: 40
-          min-coverage-changed-files: 60
+          min-coverage-overall: 0
+          min-coverage-changed-files: 80
+          continue-on-error: false
+          skip-if-no-changes: true
+          title: '# Jacoco Coverage Report'
+          pass-emoji: ':green_circle:'
+          fail-emoji: ':red_circle:'
+          update-comment: true
+          debug-mode: true
+
+      - name: Log coverage percentage
+        run: |
+          echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
+          echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
+          echo "Changed Lines (New Code) coverage ${{ steps.jacoco.outputs.coverage-changed-percentage }}"
+          echo "Is Files Changed ${{ steps.jacoco.outputs.is-files-changed }}"
+
+      #      - name: Fail PR if overall coverage is less than threshold
+      #        if: ${{ steps.jacoco.outputs.coverage-overall < 50 }}
+      #        uses: actions/github-script@v6
+      #        with:
+      #          script: |
+      #            core.setFailed("Overall coverage is less than 50!");
+
+      - name: Fail PR if changed lines coverage is less than threshold
+        if: ${{ steps.jacoco.outputs.is-files-changed == 'true' && steps.jacoco.outputs.coverage-changed-percentage < 80 }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed("Changed lines coverage is less than 80!");
